@@ -39,6 +39,10 @@ public:
 		return this->id;
 	}
 
+	// all class method, will have *this as the first parameter. Just it's omitted here, but it exist. 
+	// This will be the caller object for this method. 
+	// This also align with the fact we see before that all class object share the same function instance in memory.
+	// In this case, compiler need to know which object call this function, the solution is pass in *this pointer points to the object initial the call.
 	void show() {
 		// warning: 'this' pointer cannot be null in well-defined C++ code; comparison may be assumed to always evaluate to false [-Wtautological-undefined-compare]
 		if (this == NULL) return;
@@ -59,7 +63,7 @@ int main() {
 	Student student3("Marry", 3);
 	student.copyStudent(student3);
 
-	student.show();
+	student.show(); // equals to "Student::show(student)", student is this pointer passed into the show() function
 	student2.show();
 	student3.show();
 

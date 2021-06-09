@@ -80,6 +80,8 @@ MyNum4& operator+(const MyNum4& num1, const MyNum4& num2) {
 
 int main() {
 	MyNum num1(1), num2(2), num3(3);
+	// see the result and analysis it. it's num1 = 6, num2 = 2, num3 = 3. only num1 changed.
+	// it means compiler go from left to right. When compiler see +, it will check whether left accept + first, then apply the + to left.
 	num1 + num2 + num3;
 	num1.show();
 	num2.show();

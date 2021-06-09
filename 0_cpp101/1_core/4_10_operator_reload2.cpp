@@ -27,6 +27,39 @@ public:
 		++num;
 		return temp;
 	}
+
+	// there will be an implicit this pointer pass in as first parameter
+	MyNum& operator+=(const MyNum& myNum) {
+		// all the same class objects are friend to each other, so they have access to private fields and methods	
+		this->num += myNum.num;
+		return *this;
+	}
+
+	// overload method to catering different type
+	MyNum& operator+=(const int num) {
+		// all the same class objects are friend to each other, so they have access to private fields and methods	
+		this->num += num;
+		return *this;
+	}
+
+	MyNum& operator+=(const double num) {
+		this->num += num;
+		return *this;
+	}
+
+	MyNum& operator+(const int num) {
+		return *(new MyNum(this->num + num));
+	}
+
+	// wrong, invalide
+	// error: 'MyNum& MyNum::operator+(double, const MyNum&)' must have either zero or one argument
+	// MyNum& operator+(const double x, const MyNum& myNum) {
+	// 	return *(new MyNum(x + myNum.getNum()));
+	//}
+
+	int getNum() const {
+		return this->num;
+	}
 };
 
 
@@ -41,6 +74,9 @@ ostream& operator<<(ostream& out, MyNum myNum) {
 	return out;
 }
 
+inline MyNum& operator+(const double x, const MyNum& myNum) {
+	return *(new MyNum(x + myNum.getNum()));
+}
 
 int main() {
 	MyNum num1(1);
@@ -71,6 +107,40 @@ int main() {
 	i = 0;
 	cout << "++++i = " << ++++i << endl;
 	cout << "i = " << i << endl;
+
+	cout << endl;
+
+	MyNum num4(1), num5(2), num6(3);
+	num4 += num5 += num6;
+	cout << "num4 = " << num4 << endl; // 6
+	cout << "num5 = " << num5 << endl; // 5
+	cout << "num6 = " << num6 << endl; // 3
+	// this result is different from `4_10_operator_reload` num1 + num2 + num3; 
+	// here num5 value also changed, so for operator +=, compiler will go from right to left.
+
+	cout << endl;
+
+	num4 += 10;
+	cout << "num4 = " << num4 << endl; // 16
+
+	num4 += 10.97;
+	cout << "num4 = " << num4 << endl; // 26
+
+	cout << endl;
+
+	MyNum sumNum = num4 + 10;
+	cout << "num4 = " << num4 << endl; // 26
+	cout << "sumNum = " << sumNum << endl; // 36
+
+	// ERROR no match for 'operator+' (operand types are 'int' and 'MyNum')
+	// using this need to override operator+ in int class or global/or member func(int, myNum)
+	// sumNum = 10 + num4;
+	cout << endl;
+
+	sumNum = 10.99 + num4;
+	cout << "num4 = " << num4 << endl; // 26
+	cout << "sumNum = " << sumNum << endl; // 36
+
 	return 0;
 }
 
