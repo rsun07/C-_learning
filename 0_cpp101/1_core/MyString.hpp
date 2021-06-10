@@ -1,27 +1,29 @@
 #include <iostream>
-using namespace std;
-
 #include <cstring>
+
+using namespace std;
 
 class MyString {
 public:
-	MyString(const char* p = 0);
+	MyString(const char* p = 0, const int length = 0);
 	MyString(const MyString& s);
 	MyString& operator=(const MyString& s);
 	~MyString();
 	char* get_char_pointer() const {
 		return p; 
 	}
-	int length() const;
+	int getLength() const;
 private:
-	MyString& createStr(const char* p);
+	MyString& createStr(const char* p = 0, const int length = 0);
 	MyString& copyStr(const MyString& str);
 	char* p;
+	int length;
 };
 
-inline MyString& MyString::createStr(const char* p) {
-	if (p) {
-		this->p = new char[strlen(p) + 1];
+inline MyString& MyString::createStr(const char* p, const int length) {
+	if (length > 0) {
+	    this->length = length;
+		this->p = new char[length + 1];
 		strcpy(this->p, p);
 	} else {
 	  this->p = new char[1];
@@ -33,15 +35,16 @@ inline MyString& MyString::createStr(const char* p) {
 // ctor, copy c style string using c methods
 // why constructor receive and create a pointer rather than an object?
 // Because rather than int, couble and etc, string doesn't have strict length. On the other hand, pointer length is always the same.
-inline MyString::MyString(const char* p) {
-	createStr(p);
+inline MyString::MyString(const char* p, int length) {
+	createStr(p, length);
 } 
 
 // dtro
 inline MyString::~MyString() {
-	// must delete[], delete without [] is wrong
+	// must delete[], delete without [] is wrong, then only delete the first element
 	if (this->p != NULL) {
 	    delete[] (this->p);
+	    this->p = NULL;
 	}
 }
 
@@ -50,8 +53,10 @@ inline MyString& MyString::copyStr(const MyString& s) {
 	// check whether it's the same string. If yes, we cannot move on because we are going to delete old string.
 	if (this == &s) return *this;
 
+	// have issue here, remove this make the program works but may cause memory leak.
     if (this->p != NULL) {
 	    delete[] (this->p);
+	    this->p = NULL;
     }
 	return createStr(s.p);
 }
@@ -60,8 +65,8 @@ inline MyString::MyString(const MyString& s) {
 	copyStr(s);
 }
 
-inline int MyString::length() const {
-	return strlen(p);
+inline int MyString::getLength() const {
+	return this->length;
 }
 
 inline MyString& MyString::operator=(const MyString& s) {
@@ -69,7 +74,7 @@ inline MyString& MyString::operator=(const MyString& s) {
 }
 
 ostream& operator<<(ostream& os, const MyString& s) {
-	int len = s.length();
+	int len = s.getLength();
 	char* p = s.get_char_pointer();
 	for (int i = 0; i < len; i++, p++) {
 		os << *p;

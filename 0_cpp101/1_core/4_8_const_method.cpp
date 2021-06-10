@@ -28,6 +28,7 @@ public:
 	
 class Student2 {
 	string name;
+	// here we add mutable keyword, so within const method, this fileds is mutable
 	mutable int id;
 
 public: 
@@ -43,7 +44,12 @@ public:
 
 		id = 2;
 
-		cout << "name = " << this->name << " , id = " << this->id << endl;
+		cout << "show() const.  name = " << this->name << " , id = " << this->id << endl;
+	}
+
+	// method override, it's valid
+	void show() {
+		cout << "show() non-const.  name = " << this->name << " , id = " << this->id << endl;
 	}
 
 	void showClassName() {
@@ -54,14 +60,15 @@ public:
 int main() {
 
 	Student student("John", 1);
+	// non const object can access const method. const object cannot access non-const method
 	student.show();
 
 	Student2 student21("John", 1);
-	student2.show();
+	student21.show(); // show() non-const.  name = John , id = 1
 
 	// const object can only access const method, cannot access non const method.
 	const Student2 student22("Marry", 3);
-	student22.show();
+	student22.show(); // show() const.  name = Marry , id = 2
 
 	// error: 'this' argument to member function 'showClassName' has type 'const Student2', but function is not marked const
 	// student22.showClassName();
