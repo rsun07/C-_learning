@@ -35,13 +35,15 @@ int main() {
 	cout << endl;
 	list<int> target;
 	
-	// need resize before hand, otherwise will cause run time error "Cannot rereference end iterator"
+	// need resize before transforming, otherwise will cause run time error "Cannot rereference end iterator"
 	 target.resize(v.size());
 	transform(v.begin(), v.end(), target.begin(), TransformNum());
 	for_each(target.begin(), target.end(), PrintNumFunctor());
 	cout << endl;
 
-	// must get the iterator before resize, and cannot use the end iterator, must use last value iterator
+	// must get the iterator before resize, and cannot use the end iterator, must use last value iterator, because end iterator is a fake node.
+	// Only list iterator could be used after resize because it's linked list implementation.
+	// Other iterators, they will change after resize. E.g, vector, will move all element to a new memory space. 
 	list<int>::iterator valueEndIt = --target.end();
 	target.resize(target.size() * 2);
 

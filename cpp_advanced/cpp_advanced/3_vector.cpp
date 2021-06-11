@@ -1,14 +1,15 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
+#include <string>
 
 #include <vector>
 #include <iterator>
-#include <string>
+#include "utils.cpp"
 
 template<class T>
 void printVector(const vector<T>& v) {
 	for (auto element : v) {
-		cout << std::to_string(element) << ", ";
+		cout << element << ", ";
 	}
 	cout << endl;
 }
@@ -71,16 +72,18 @@ void testCreation() {
 
 void testBasicConfig() {
 	vector<int> v1{ 1,2,3,4,5 };
-	cout << v1.empty() << endl;
+	cout << v1.empty() << endl; // 0
 
 	vector<string> v2;
-	cout << v2.empty() << endl;
+	cout << v2.empty() << endl; // 1
 
 	cout << "v1 capacity = " << v1.capacity() << ", v1 size = " << v1.size() << endl;
-
+	cout << "v2 capacity = " << v2.capacity() << ", v2 size = " << v2.size() << endl;
+	// v1 capacity = 5, v1 size = 5
+	// v2 capacity = 0, v2 size = 0
 	cout << endl;
 
-	// this value 7,8,9 will cause later capacity value different (10,12,13), maybe due to the resize alghrotihm, need some investigate
+	// this value set 7 or 8 or 9 will cause later capacity value different among (10 or 12 or 13), maybe due to the resize alghrotihm, need some source code learning
 	v1.resize(9);
 	printVectorAndCapacity(v1);
 
@@ -147,12 +150,12 @@ void testSwap() {
 	printVector(v2);
 	cout << endl;
 
-	v1.my_swap(v2);
+	v1.swap(v2);
 	printVector(v1);
 	printVector(v2);
 	cout << endl;
 
-	v2.my_swap(v1);
+	v2.swap(v1);
 	printVector(v1);
 	printVector(v2);
 	cout << endl;
@@ -160,16 +163,16 @@ void testSwap() {
 	vector<int> v3;
 	v3.assign(20, 1);
 	
-	v1.my_swap(v3);
+	v1.swap(v3);
 	printVectorAndCapacity(v1);
 	printVectorAndCapacity(v3);
 
-	v3.my_swap(v1);
+	v3.swap(v1);
 	v3.resize(2);
 	printVectorAndCapacity(v3);
 
 	// use anonymous vector object to resize capacity
-	vector<int>(v3).my_swap(v3);
+	vector<int>(v3).swap(v3);
 	printVectorAndCapacity(v3);
 }
 
@@ -191,6 +194,7 @@ void reserveTestHelper(vector<int> & v) {
 	cout << count << endl;
 }
 
+// reserve space in advance if you know the capacity in advance to avoid vector resizing multiple times when adding new elements
 void testReserve() {
 	vector<int> v1;
 	reserveTestHelper(v1);
@@ -208,17 +212,19 @@ void testReserve() {
 }
 
 int main() {
+	Utils::printTestMsg("testCreation");
 	testCreation();
-	cout << "\n\n" << endl;
+	Utils::printTestMsg("testBasicConfig");
 	testBasicConfig();
-	cout << "\n\n" << endl;
+	Utils::printTestMsg("testGetValue");
 	testGetValue();
-	cout << "\n\n" << endl;
+	Utils::printTestMsg("testEditValue");
 	testEditValue();
-	cout << "\n\n" << endl;
+	Utils::printTestMsg("testSwap");
 	testSwap();
-	cout << "\n\n" << endl;
+	Utils::printTestMsg("testReserve");
 	testReserve();
+	Utils::printTestMsg("");
 
 	system("pause");
 	return 0;

@@ -20,6 +20,7 @@ void testCreation() {
 		d1.push_back(i);
 	}
 
+	// create five 1 
 	deque<int> d2(5, 1);
 
 	deque<int> d3{ 1,2,3 };
@@ -130,6 +131,7 @@ void testSort() {
 int main() {
 	testCreation();
 	cout << "\n\n" << endl;
+
 	testBasicConfig();
 	cout << "\n\n" << endl;
 

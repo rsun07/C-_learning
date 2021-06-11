@@ -24,7 +24,7 @@ void testBasic(){
 	s.push(2);
 	s.push(3);
 
-	// Don't have this type of initializer
+	// Don't have this type of initializer because stack doesn't have initializer list constructor
 	// stack<int> s{ 1,2,3 };
 
 	printStack(s);
@@ -39,7 +39,7 @@ void testAdvanced() {
 	s2.push(11);
 	s2.push(22);
 
-	s1.my_swap(s2);
+	s1.swap(s2);
 
 	printStack(s1);
 	printStack(s2);
@@ -48,7 +48,9 @@ void testAdvanced() {
 int main() {
 	testBasic();
 	cout << "\n\n" << endl;
+	
 	testAdvanced();
+	cout << "\n\n" << endl;
 
 	system("pause");
 	return 0;

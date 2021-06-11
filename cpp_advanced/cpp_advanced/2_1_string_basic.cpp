@@ -4,7 +4,7 @@ using namespace std;
 void testConstructors() {
 	string s1;
 
-	// char* is a pointer, string is a class, encapsulating a char* inside to manage the string char array
+	// char* is a pointer, string is a class, encapsulating a char* inside to manage the char array
 	const char* str = "hello world";
 	string s2(str); 
 
@@ -83,6 +83,7 @@ void testAppend() {
 	int i = 5;
 	char c = 'z';
 	double d = 5.05;
+	// + only apply to string, cannot apply to other type. For custom class, you need a conversion function to make it work.
 	string str4 = str1 + "\t" + str2 + "\t" + str3 + "\t"  + c + '\t' + 'q' /*+ 1 + "\t"   + i + '\t' + d + '\t' + 5.06*/;
 	cout << str4 << endl;
 }

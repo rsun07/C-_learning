@@ -5,41 +5,42 @@ using namespace std;
 #include <vector>
 #include <set>
 
+#include <algorithm>
+
+#include "Utils.cpp"
+
 void testAccumulate() {
 	vector<int> v{1, 2, 3};
 	int sum = accumulate(v.begin(), v.end(), 0);
 	cout << "sum = " << sum << endl;
 
 	set<double> s{ 1.1, 1.2, 3.5, -15.1 };
-	cout << "sum = " << accumulate(s.begin(), s.end(), 100) << endl;
-	cout << "sum = " << accumulate(s.begin(), s.end(), 100.0) << endl;
-}
-
-template<class T>
-void printVector(const vector<T> v) {
-	for (auto e : v) {
-		cout << e << ", ";
-	}
-	cout << endl;
+	cout << "sum = " << accumulate(s.begin(), s.end(), 100) << endl; // 89
+	cout << "sum = " << accumulate(s.begin(), s.end(), 100.0) << endl; // 90.7
 }
 
 void testFill() {
+	cout << "Test fill()" << endl;
 	vector<int> v1;
 	fill(v1.begin(), v1.end(), 11);
-	printVector(v1);
+	// both following two print empty
+	Utils::printCollection(v1);
+	for_each(v1.begin(), v1.end(), [](int num) { cout << num << ", "; }); 
+	cout << endl;
 
 	v1.resize(3);
-	printVector(v1);
+	Utils::printCollection(v1);
 	fill(v1.begin(), v1.end(), 11);
-	printVector(v1);
+	Utils::printCollection(v1);
 
 	// overwrite the previous values
 	fill(v1.begin(), v1.end(), 22);
-	printVector(v1);
+	Utils::printCollection(v1);
+	cout << "v1.capacity = " << v1.capacity() << endl;
 
-	// same result
-	vector<int> v2(5, 33);
-	printVector(v2);
+	// will resize the vector automatically and fill with ten `33`
+	vector<int> v2(10, 33);
+	Utils::printCollection(v2);
 }
 
 int main() {

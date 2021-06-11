@@ -34,7 +34,7 @@ void printMap(map<K, V> & m) {
 #define JAPANESE 2
 
 void testMapBasic() {
-	map<int, string> m{ pair<int, string>(1,"1"), pair<int, string>(2,"2")};
+	map<int, string> m{ pair<int, string>(1,"1"), make_pair(2,"2")};
 	cout << m.size() << endl;
 
 	m.insert(pair<int, string>(0, "0"));

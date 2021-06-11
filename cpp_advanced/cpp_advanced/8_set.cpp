@@ -60,7 +60,7 @@ void testBasicConfig() {
 	printSet(s);
 	printSet(s2);
 
-	s.my_swap(s2);
+	s.swap(s2);
 
 	cout << endl;
 	printSet(s);
@@ -103,6 +103,15 @@ void printMultiset(const multiset<T>& s) {
 	cout << endl;
 }
 
+// cannot enforce a collection, just as documentation to indicate this
+template<typename Collection>
+void printCollection(const Collection& c) {
+	for (auto e : c) {
+		cout << e << ";  ";
+	}
+	cout << endl;
+}
+
 void setVsMultiset() {
 	set<int> s{ 1,1,1,2,3 };
 	multiset<int> ms{ 1,1,1,2,3 };
@@ -133,6 +142,9 @@ void setVsMultiset() {
 	cout << "s count res for 9: " << count2 << endl;
 	cout << "ms count res for 1: " << count3 << endl;
 	cout << "ms count res for 9: " << count4 << endl;
+
+	cout << endl;
+	printCollection(ms);
 }
 
 // functor
@@ -149,24 +161,30 @@ void setOrder() {
 	
 	// cannot use this method as this set has two template types
 	// printSet(s);
+	printCollection(s);
 
-	for (set<int>::iterator it = s.begin(); it != s.end(); it++) {
-		cout << *it << ", ";
-	}
 	cout << endl;
 }
 
+#include "Utils.cpp"
+
 int main() {
+	Utils::printTestMsg("testCreation");
 	testCreation();
-	cout << "\n\n" << endl;
+
+	Utils::printTestMsg("testBasicConfig");
 	testBasicConfig();
-	cout << "\n\n" << endl;
+
+	Utils::printTestMsg("testEditValue");
 	testEditValue();
-	cout << "\n\n" << endl;
+
+	Utils::printTestMsg("setVsMultiset");
 	setVsMultiset();
-	cout << "\n\n" << endl;
+
+	Utils::printTestMsg("setOrder");
 	setOrder();
-	cout << "\n\n" << endl;
+
+	Utils::printTestMsg("");
 
 	system("pause");
 	return 0;

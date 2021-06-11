@@ -6,6 +6,8 @@ using namespace std;
 #include <list>
 #include <deque>
 
+#include "Utils.cpp"
+
 void testSort() {
 	// used before muiltiple times
 }
@@ -22,24 +24,28 @@ void testShuffle() {
 	cout << endl;
 
 	random_shuffle(v.begin(), v.end());
-
-	for_each(v.begin(), v.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
 	cout << endl;
 
 	random_shuffle(v.begin(), v.end());
-	for_each(v.begin(), v.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
 	cout << endl;
 }
 
+// Can merge among different type of containers using iterators
 void testMerge() {
 	vector<int> v{ 1,2,3 };
 	deque<int> d{ 4,5,6,7 };
+	// I believe initial with size is not required for list due to the linked list implementation
+	// But in fact, must initialize with size, otherwise will cause run time error: Cannot differentiate list end iterator
 	list<int> l(v.size() + d.size());
-	for_each(l.begin(), l.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
+	Utils::printCollection(d);
+	Utils::printCollection(l);
 	cout << endl;
 
 	merge(v.begin(), v.end(), d.begin(), d.end(), l.begin());
-	for_each(l.begin(), l.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(l);
 	cout << endl;
 }
 
@@ -47,15 +53,15 @@ void testReverse() {
 	vector<int> v{1,2,3,4,5,6,7};
 
 	reverse(v.begin(), v.end());
-	for_each(v.begin(), v.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
 	cout << endl;
 
 	reverse(v.begin(), v.end());
-	for_each(v.begin(), v.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
 	cout << endl;
 
 	reverse(v.begin() + 1, v.end() - 2);
-	for_each(v.begin(), v.end(), [](int num) {cout << num << ", "; });
+	Utils::printCollection(v);
 	cout << endl;
 }
 

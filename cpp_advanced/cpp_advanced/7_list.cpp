@@ -32,7 +32,7 @@ void testCreation() {
 	vector<int> v{ 4,5,6 };
 
 	// not exist following two
-	// list<int> l5(v);
+	// list<int> l5(v); // don't accept vector in constructor
 	// list<int> l5(v, v+2);
 	list<int> l5(v.begin(), v.end() - 1);
 
@@ -76,7 +76,7 @@ void testBasicConfig() {
 	l1.resize(6);
 
 	list<int> l2{ 3,2,1 };
-	l1.my_swap(l2);
+	l1.swap(l2);
 	cout << endl;
 	printList(l1);
 	printList(l2);
@@ -95,7 +95,7 @@ void testGetValue() {
 	cout << "l.front() = " << l.front() << ", l.back() = " << l.back() << endl;
 	
 	cout << *l.begin() << endl;
-	// end is not the last, end - 1 is the last. Will cause out of boundary run time error
+	// end is not the last, end - 1 is the last. next line will cause out of boundary run time error
 	// cout << *(l.end()) << endl;
 
 	// doesn't support random/index access
